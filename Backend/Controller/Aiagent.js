@@ -1,7 +1,4 @@
 import User from "../Model/User.js";
-import GitHubData from "../Model/GitHubData.js";
-import LeetCodeData from "../Model/LeetCodeData.js";
-import CodeforcesData from "../Model/CodeforcesData.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 import Resume from "../Model/Resume.js";
@@ -14,35 +11,13 @@ const generateAIResponse = async (req, res) => {
     const { question } = req.body;
 
     const resumedata = await Resume.findOne({ userId });
-
-
-
     if (!question) {
       return res.status(400).json({ message: "Question is required." });
     }
-
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found." });
 
-    // Fetch data using userId from each collection
-    const githubDataEntry = await GitHubData.findOne({ userId });
-    const leetcodeDataEntry = await LeetCodeData.findOne({ userId });
-    const codeforcesDataEntry = await CodeforcesData.findOne({ userId });
-
-    const combinedData = {
-      github: githubDataEntry?.data || null,
-      leetcode: leetcodeDataEntry
-        ? {
-            stats: leetcodeDataEntry.stats,
-            submissionCalendar: leetcodeDataEntry.submissionCalendar,
-            topicAnalysisStats: leetcodeDataEntry.topicAnalysisStats,
-            awards: leetcodeDataEntry.awards,
-          }
-        : null,
-      codeforces: codeforcesDataEntry?.data || null,
-    };
-
-    const aiResponse = await generateGeminiResponse(combinedData,resumedata, question, user.name);
+    const aiResponse = await generateGeminiResponse(resumedata, question, user.name);
     return res.status(200).json({ aiResponse });
   } catch (error) {
     console.error("❌ Error generating AI response:", error);
@@ -50,7 +25,7 @@ const generateAIResponse = async (req, res) => {
   }
 };
 
-const generateGeminiResponse = async (data,resumedata, question, username) => {
+const generateGeminiResponse = async (resumedata, question, username) => {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
