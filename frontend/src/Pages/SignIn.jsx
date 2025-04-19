@@ -20,8 +20,7 @@ const SignIn = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        const result=dispatch(loginUser(data));
-        console.log(result)
+        dispatch(loginUser(data));
     };
 
     // Redirect to dashboard if user is already logged in
