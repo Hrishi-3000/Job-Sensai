@@ -15,6 +15,11 @@ import { authenticateToken } from "./Middlewares/Auth.js";
 import { generateAIResponse } from "./Controller/Aiagent.js";
 import { FetchInternships } from "./Controller/InternshipController.js";
 import { checkAndSendEmails } from "./Controller/Mail.js";
+import { fetchjob } from "./Controller/indid.js";
+import { fetchJobsFromAdzuna } from "./Controller/job.js";
+import { getPlaylist, searchYouTube } from "./Controller/youtube.js";
+import { getJobsByTitle } from "./Controller/getJobsByTitle.js";
+import { scrapeCourseraCourses } from "./Controller/course.js";
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
@@ -44,6 +49,17 @@ app.use("/api/aiinterview", AIInterview);
 app.use("/api/resume", AnalyzeResume);
 
 app.get("/api/jobs", FetchInternships);
+app.get("/api/job", fetchjob);
+app.get("/api/jobb", fetchJobsFromAdzuna);
+
+app.get("/api/youtube", searchYouTube);
+app.get("/api/youtube/playlist/:id", getPlaylist);
+
+app.get("/api/jobbb", getJobsByTitle);
+
+app.get("/api/course", scrapeCourseraCourses);
+
+
 
 // checkAndSendEmails()
 app.listen(PORT, () => {
