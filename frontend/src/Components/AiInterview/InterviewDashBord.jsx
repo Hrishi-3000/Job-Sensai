@@ -27,7 +27,7 @@ export default function InterviewDashBord() {
     const handleDeleteInterview = async (interviewId) => {
         try {
             await axios.delete(`${import.meta.env.VITE_API_URL}/api/aiinterview/interview/${interviewId}`);
-            dispatch(setUserInterviews(userInterviewList.filter(i => i._id !== interviewId)));
+            dispatch(setUserInterviews(userInterviewList?.filter(i => i._id !== interviewId)));
             toast.success("Interview deleted successfully!");
         } catch (error) {
             console.error(error);
@@ -63,11 +63,11 @@ export default function InterviewDashBord() {
                     📝 Interview List
                 </h2>
 
-                {userInterviewList.length === 0 ? (
+                {userInterviewList?.length === 0 ? (
                     <p className="text-center text-gray-500">No interviews found. Start your first interview now!</p>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {userInterviewList.map((interview) => (
+                        {userInterviewList?.map((interview) => (
                             <motion.div
                                 key={interview._id}
                                 whileHover={{ scale: 1.03 }}
