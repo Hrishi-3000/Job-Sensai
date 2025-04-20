@@ -95,7 +95,7 @@ const HeroSection = () => {
     ];
 
     return (
-        <section className="pt-8 lg:pt-32 bg-gradient-to-br from-blue-50 to-indigo-50 relative overflow-hidden z-10" ref={parallaxRef}>
+        <section className="pt-20 lg:pt-32 bg-gradient-to-br from-blue-50 to-indigo-50 relative overflow-hidden z-10" ref={parallaxRef}>
 
             {/* Background Bubble Animation */}
             <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
