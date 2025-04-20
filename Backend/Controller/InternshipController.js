@@ -1,4 +1,7 @@
 import puppeteer from "puppeteer";
+import axios from "axios";
+
+const OPENCAGE_API_KEY = "97b8ff809b234987ae01fe8d7ac25edd"; // Replace with your actual API key
 
 export const FetchInternships = async (req, res) => {
   const { category } = req.query;
@@ -10,7 +13,7 @@ export const FetchInternships = async (req, res) => {
 
   try {
     console.log(`🚀 Opening category page: ${URL}`);
-    const browser = await puppeteer.launch({ headless: "new" }); // 'new' is more stable with Chromium in recent Puppeteer
+    const browser = await puppeteer.launch({ headless: "new" });
     const page = await browser.newPage();
     await page.goto(URL, { waitUntil: "networkidle2" });
     await page.waitForSelector(".individual_internship");
@@ -19,7 +22,7 @@ export const FetchInternships = async (req, res) => {
       return Array.from(document.querySelectorAll(".individual_internship"))
         .map(el => {
           const title = el.querySelector("h3 a")?.innerText.trim();
-          if (!title) return null; // skip if title is missing
+          if (!title) return null;
 
           return {
             title,
@@ -32,11 +35,36 @@ export const FetchInternships = async (req, res) => {
           };
         })
         .filter(item => item !== null)
-        .slice(0, 15); // limit to first 15 valid internships
+        .slice(0, 15);
     });
 
     await browser.close();
-    res.json(internships);
+
+    // Add coordinates using OpenCage
+    const enrichedInternships = await Promise.all(
+      internships.map(async (internship) => {
+        try {
+          const response = await axios.get("https://api.opencagedata.com/geocode/v1/json", {
+            params: {
+              key: OPENCAGE_API_KEY,
+              q: internship.location,
+              limit: 1,
+            },
+          });
+
+          const geometry = response.data.results[0]?.geometry;
+          return {
+            ...internship,
+            coordinates: geometry ? { lat: geometry.lat, lng: geometry.lng } : null,
+          };
+        } catch (err) {
+          console.warn(`⚠️ Failed to fetch coordinates for location: ${internship.location}`);
+          return { ...internship, coordinates: null };
+        }
+      })
+    );
+
+    res.json(enrichedInternships);
   } catch (error) {
     console.error("🚨 Error fetching internships:", error.message);
     res.status(500).json({ error: "Failed to fetch internships" });

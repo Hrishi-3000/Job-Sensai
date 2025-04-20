@@ -423,7 +423,8 @@ function ATSResume() {
                                         <h3 className="text-lg font-semibold text-gray-900">Job Locations</h3>
                                     </div>
                                     <div className="h-[400px] rounded-lg overflow-hidden">
-                                        <JobMapView />
+                                        <h1>{response.recommendedjob}</h1>
+                                        <JobMapView jobcategory={response.recommendedjob} />
                                     </div>
                                 </div>
                             </div>
