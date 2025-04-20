@@ -21,7 +21,6 @@ import PlaylistPlayer from './Components/Youtube/PlaylistPlayer';
 import VideoPlayer from './Components/Youtube/VideoPlayer';
 import CourseSearch from './Components/Youtube/CourseSearch';
 import JobSearch from './Components/Youtube/JobSearch';
-import JobMapView from './Components/Map/Map';
 
 
 const router = createBrowserRouter(
