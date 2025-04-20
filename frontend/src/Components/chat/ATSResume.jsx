@@ -12,8 +12,8 @@ import {
     FaRegFileAlt
 } from "react-icons/fa";
 import { FiUpload, FiAlertCircle, FiBriefcase, FiMapPin, FiLayers } from "react-icons/fi";
-import JobMapView from "../Map/Map";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import JobMapView from "../map/Map";
 
 function ATSResume() {
     const [file, setFile] = useState(null);
