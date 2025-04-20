@@ -24,14 +24,12 @@ import {
   CardTitle,
   CardContent,
   CardFooter,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Toggle } from "@/components/ui/toggle";
-import { Separator } from "@/components/ui/separator";
-import { Slider } from "@/components/ui/slider";
+} from "../ui/card";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Progress } from "../ui/progress";
+import { Badge } from "../ui/badge";
+import { Slider } from "../ui/slider";
 
 const PlaylistPlayer = () => {
   const { id } = useParams();
@@ -60,7 +58,7 @@ const PlaylistPlayer = () => {
       setError(null);
       
       try {
-        const response = await axios.get(`http://localhost:8000/api/youtube/playlist/${id}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/youtube/playlist/${id}`);
         setPlaylist(response.data.playlist);
         setVideos(response.data.videos);
         

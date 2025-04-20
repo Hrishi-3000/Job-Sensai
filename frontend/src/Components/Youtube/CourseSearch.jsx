@@ -7,13 +7,14 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
+} from '../ui/card';
+
+import { Button } from '../ui/button';
+import { Badge } from '../ui/badge';
+import { Skeleton } from '../ui/skeleton';
 import { Search, Star, Clock, ExternalLink, ChevronRight, Rocket } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Input } from '../ui/input';
 
 const CourseSearch = () => {
   const [query, setQuery] = useState('');
@@ -28,7 +29,7 @@ const CourseSearch = () => {
     setError(null);
     
     try {
-      const response = await axios.get(`http://localhost:8000/api/course?q=${query}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/course?q=${query}`);
       setCourses(response.data.results);
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to fetch courses');
@@ -44,7 +45,7 @@ const CourseSearch = () => {
       const fetchPopularCourses = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`http://localhost:8000/api/course?q=programming`);
+          const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/course?q=programming`);
           setCourses(response.data.results.slice(0, 6));
         } catch (err) {
           console.error("Error fetching popular courses:", err);

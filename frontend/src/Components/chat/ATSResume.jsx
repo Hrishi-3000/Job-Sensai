@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import {
-    FaExclamationTriangle,
     FaSpinner,
     FaCheckCircle,
     FaFilePdf,
@@ -14,7 +13,6 @@ import {
 } from "react-icons/fa";
 import { FiUpload, FiAlertCircle, FiBriefcase, FiMapPin, FiLayers } from "react-icons/fi";
 import JobMapView from "../Map/Map";
-import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function ATSResume() {
@@ -76,7 +74,7 @@ function ATSResume() {
 
     const suggestcertificate = async (data) => {
         try {
-            const res = await axios.get(`http://localhost:8000/api/course?q=${data}`);
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/course?q=${data}`);
             setcourse(res?.data?.results);
         } catch (err) {
             console.error(err);

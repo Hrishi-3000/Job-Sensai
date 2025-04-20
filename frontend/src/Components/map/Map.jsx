@@ -63,7 +63,7 @@ const JobMapView = ({ jobcategory }) => {
       setError("");
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/jobs?category=${encodeURIComponent(jobcategory)}`
+          `${import.meta.env.VITE_API_URL}/api/jobs?category=${encodeURIComponent(jobcategory)}`
         );
         // Filter out jobs without valid coordinates or work from home jobs
         const validJobs = res.data.filter(job => 

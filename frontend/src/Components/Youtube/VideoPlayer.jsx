@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 
 const VideoPlayer = () => {
   const { id } = useParams(); // Get the video ID from URL
-  const [video, setVideo] = useState(null);
 
   useEffect(() => {
     // You can fetch video details here if you want, or directly use the ID to load the video

@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Skeleton } from "../ui/skeleton";
+import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Search, Loader2, AlertCircle } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 const YouTubeSearch = () => {
   const [query, setQuery] = useState("");
@@ -39,7 +39,7 @@ const YouTubeSearch = () => {
     const fetchDefaultContent = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("http://localhost:8000/api/youtube", {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/youtube`, {
           params: { q: "Tech", type: "playlist", maxResults: 6 },
         });
         setDefaultContent(res.data);
@@ -61,7 +61,7 @@ const YouTubeSearch = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await axios.get("http://localhost:8000/api/youtube", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/youtube`, {
         params: { q: query, type },
       });
       setResults(res.data);
